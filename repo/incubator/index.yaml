@@ -1,0 +1,74 @@
+apiVersion: v1
+entries:
+  bookinfo:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.176059+01:00
+    description: A Helm chart for bookinfo app (Sample Istio app)
+    digest: 8dd722ce248107aa614a11e0ace51db139b131a88083bd4ba5a6a3545461ba8a
+    icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
+    keywords:
+    - sample
+    - istio
+    - bookinfo
+    - ruby
+    - python
+    - liberty
+    - mysql
+    - ICAM
+    - CloudPak
+    name: bookinfo
+    urls:
+    - bookinfo-1.0.0.tgz
+    version: 1.0.0
+  details:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.176979+01:00
+    description: A Helm chart for Details service (part of Istio Bookinfo sample)
+    digest: 0d2774cc5b5efee8bacd56d354e0330d58f0fd66eb46ea7fab191f85d6ef5b02
+    name: details
+    urls:
+    - details-0.1.0.tgz
+    version: 0.1.0
+  mysqldb:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.179624+01:00
+    description: A Helm chart for mysqldb service (part of Istio Bookinfo sample)
+    digest: ae246663ddd8bff95837d511bb00b4583b44e1c4bcd43ebf6847d4390ed78c6d
+    name: mysqldb
+    urls:
+    - mysqldb-0.1.0.tgz
+    version: 0.1.0
+  productpage:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.18022+01:00
+    description: A Helm chart for Productpage service (part of Istio Bookinfo sample)
+    digest: 657bae19ce91419e4249c0c1721d83f6daf3ea26b6f39a781e0cfdd30e51b226
+    name: productpage
+    urls:
+    - productpage-0.1.0.tgz
+    version: 0.1.0
+  ratings:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.180779+01:00
+    description: A Helm chart for Kubernetes
+    digest: f3f685204a03e25b45b662815b0e78bc4a694de47af155ba37c4c96374d474f8
+    name: ratings
+    urls:
+    - ratings-0.1.0.tgz
+    version: 0.1.0
+  reviews:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2019-12-08T20:47:10.181355+01:00
+    description: A Helm chart for Kubernetes
+    digest: b4a61d14a898281bba3da0d99420e8714a8f6a26c5288086db7abf25401ffa93
+    name: reviews
+    urls:
+    - reviews-0.1.0.tgz
+    version: 0.1.0
+generated: 2019-12-08T20:47:10.171981+01:00
