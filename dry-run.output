@@ -1,0 +1,865 @@
+[debug] Created tunnel using local port: '55949'
+
+[debug] SERVER: "127.0.0.1:55949"
+
+[debug] Original chart version: ""
+[debug] Host="", Key="/Users/dymaczew/.helm/key.pem", Cert="/Users/dymaczew/.helm/cert.pem", CA="/Users/dymaczew/.helm/ca.pem"
+
+[debug] CHART PATH: /Users/dymaczew/Documents/_code/istio/samples/bookinfo/platform/helm/bookinfo
+
+NAME:   bookinfo
+REVISION: 1
+RELEASED: Wed Nov 27 19:40:04 2019
+CHART: bookinfo-1.0.0
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+details:
+  affinity: {}
+  fullnameOverride: ""
+  global: {}
+  icam:
+    enabled: true
+    serverSecret: icam-server-secret
+    serviceAccount: bookinfo-details
+  image:
+    pullPolicy: IfNotPresent
+    repository: docker.io/dymaczew/examples-bookinfo-details-v1
+    tag: latest
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - chart-example.local
+    paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 9080
+    type: ClusterIP
+  tolerations: []
+fullnameOverride: ""
+ingress:
+  annotations: {}
+  enabled: true
+  hosts:
+  - chart-example.local
+  paths: []
+  tls: []
+mysqldb:
+  affinity: {}
+  fullnameOverride: ""
+  global: {}
+  image:
+    pullPolicy: IfNotPresent
+    repository: docker.io/dymaczew/examples-bookinfo-mysqldb
+    tag: latest
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - chart-example.local
+    paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 3306
+    type: ClusterIP
+  tolerations: []
+nameOverride: ""
+nodeSelector: {}
+productpage:
+  affinity: {}
+  fullnameOverride: ""
+  global: {}
+  icam:
+    enabled: true
+    serverSecret: icam-server-secret
+    serviceAccount: bookinfo-productpage
+  image:
+    pullPolicy: IfNotPresent
+    repository: docker.io/dymaczew/examples-bookinfo-productpage-v1
+    tag: latest
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - chart-example.local
+    paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 9080
+    type: ClusterIP
+  tolerations: []
+ratings:
+  affinity: {}
+  fullnameOverride: ""
+  global: {}
+  icam:
+    enabled: true
+    serverSecret: icam-server-secret
+    serviceAccount: bookinfo-ratings
+  image:
+    pullPolicy: IfNotPresent
+    repository: docker.io/dymaczew/examples-bookinfo-ratings-v2
+    tag: latest
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - chart-example.local
+    paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 9080
+    type: ClusterIP
+  tolerations: []
+replicaCount: 1
+resources: {}
+reviews:
+  affinity: {}
+  fullnameOverride: ""
+  global: {}
+  icam:
+    enabled: true
+    serverSecret: icam-server-secret
+    serviceAccount: bookinfo-reviews
+  image:
+    pullPolicy: IfNotPresent
+    repository: docker.io/dymaczew/examples-bookinfo-reviews-v3
+    tag: latest
+  ingress:
+    annotations: {}
+    enabled: false
+    hosts:
+    - chart-example.local
+    paths: []
+    tls: []
+  nameOverride: ""
+  nodeSelector: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 9080
+    type: ClusterIP
+  tolerations: []
+service:
+  port: 80
+  type: ClusterIP
+tolerations: []
+
+HOOKS:
+---
+# bookinfo-reviews-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-reviews-test-connection"
+  labels:
+    app.kubernetes.io/name: reviews
+    helm.sh/chart: reviews-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo-reviews:9080']
+  restartPolicy: Never
+---
+# bookinfo-mysqldb-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-mysqldb-test-connection"
+  labels:
+    app.kubernetes.io/name: mysqldb
+    helm.sh/chart: mysqldb-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo-mysqldb:3306']
+  restartPolicy: Never
+---
+# bookinfo-ratings-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-ratings-test-connection"
+  labels:
+    app.kubernetes.io/name: ratings
+    helm.sh/chart: ratings-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo-ratings:9080']
+  restartPolicy: Never
+---
+# bookinfo-details-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-details-test-connection"
+  labels:
+    app.kubernetes.io/name: details
+    helm.sh/chart: details-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo-details:9080']
+  restartPolicy: Never
+---
+# bookinfo-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-test-connection"
+  labels:
+    app.kubernetes.io/name: bookinfo
+    helm.sh/chart: bookinfo-1.0.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo:80']
+  restartPolicy: Never
+---
+# bookinfo-productpage-test-connection
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "bookinfo-productpage-test-connection"
+  labels:
+    app.kubernetes.io/name: productpage
+    helm.sh/chart: productpage-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['bookinfo-productpage:9080']
+  restartPolicy: Never
+MANIFEST:
+
+---
+# Source: bookinfo/charts/mysqldb/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-credentials
+type: Opaque
+data:
+  rootpasswd: cGFzc3dvcmQ=
+---
+# Source: bookinfo/charts/details/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-details
+---
+# Source: bookinfo/charts/productpage/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-productpage
+---
+# Source: bookinfo/charts/ratings/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings
+---
+# Source: bookinfo/charts/reviews/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-reviews
+---
+# Source: bookinfo/charts/details/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: details-lwdc-query
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - clusters
+  - nodes
+  - services
+  - configmaps
+  - pods
+  verbs:
+  - list
+  - get
+---
+# Source: bookinfo/charts/productpage/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: productpage-lwdc-query
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - clusters
+  - nodes
+  - services
+  - configmaps
+  - pods
+  verbs:
+  - list
+  - get
+---
+# Source: bookinfo/charts/ratings/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ratings-lwdc-query
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - clusters
+  - nodes
+  - services
+  - configmaps
+  - pods
+  verbs:
+  - list
+  - get
+---
+# Source: bookinfo/charts/reviews/templates/clusterrole.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: reviews-lwdc-query
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - clusters
+  - nodes
+  - services
+  - configmaps
+  - pods
+  verbs:
+  - list
+  - get
+---
+# Source: bookinfo/charts/details/templates/rolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: details-lwdc-rolebinding
+  namespace: bookinfo
+subjects:
+- kind: User
+  name: system:serviceaccount:bookinfo:bookinfo-details
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: details-lwdc-query
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/details/templates/rolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: details-anyuid-rolebinding
+  namespace: bookinfo
+subjects:
+- kind: Group
+  name: system:serviceaccounts:bookinfo
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: ibm-anyuid-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/productpage/templates/rolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: productpage-lwdc-rolebinding
+  namespace: bookinfo
+subjects:
+- kind: User
+  name: system:serviceaccount:bookinfo:bookinfo-productpage
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: productpage-lwdc-query
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/ratings/templates/rolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ratings-lwdc-rolebinding
+  namespace: bookinfo
+subjects:
+- kind: User
+  name: system:serviceaccount:bookinfo:bookinfo-ratings
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: ratings-lwdc-query
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/reviews/templates/rolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: reviews-lwdc-rolebinding
+  namespace: bookinfo
+subjects:
+- kind: User
+  name: system:serviceaccount:bookinfo:bookinfo-reviews
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: reviews-lwdc-query
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/details/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+  labels:
+    app.kubernetes.io/name: details
+    helm.sh/chart: details-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: details
+    app.kubernetes.io/instance: bookinfo
+---
+# Source: bookinfo/charts/mysqldb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldb
+  labels:
+    app.kubernetes.io/name: mysqldb
+    helm.sh/chart: mysqldb-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      protocol: TCP
+      name: tcp
+  selector:
+    app.kubernetes.io/name: mysqldb
+    app.kubernetes.io/instance: bookinfo
+---
+# Source: bookinfo/charts/productpage/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: productpage
+  labels:
+    app.kubernetes.io/name: productpage
+    helm.sh/chart: productpage-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: productpage
+    app.kubernetes.io/instance: bookinfo
+---
+# Source: bookinfo/charts/ratings/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+  labels:
+    app.kubernetes.io/name: ratings
+    helm.sh/chart: ratings-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: ratings
+    app.kubernetes.io/instance: bookinfo
+---
+# Source: bookinfo/charts/reviews/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+  labels:
+    app.kubernetes.io/name: reviews
+    helm.sh/chart: reviews-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: reviews
+    app.kubernetes.io/instance: bookinfo
+---
+# Source: bookinfo/charts/details/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-details
+  labels:
+    app.kubernetes.io/name: details
+    helm.sh/chart: details-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: details
+      app.kubernetes.io/instance: bookinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+        - name: details
+          image: "docker.io/dymaczew/examples-bookinfo-details-v1:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {}
+---
+# Source: bookinfo/charts/mysqldb/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-mysqldb
+  labels:
+    app.kubernetes.io/name: mysqldb
+    helm.sh/chart: mysqldb-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mysqldb
+      app.kubernetes.io/instance: bookinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mysqldb
+        app.kubernetes.io/instance: bookinfo
+    spec:
+      containers:
+        - name: mysqldb
+          image: "docker.io/dymaczew/examples-bookinfo-mysqldb:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3306
+              protocol: TCP
+          resources:
+            {}
+            
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: rootpasswd
+          args: ["--default-authentication-plugin","mysql_native_password"]
+---
+# Source: bookinfo/charts/productpage/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-productpage
+  labels:
+    app.kubernetes.io/name: productpage
+    helm.sh/chart: productpage-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: productpage
+      app.kubernetes.io/instance: bookinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: productpage
+        app.kubernetes.io/instance: bookinfo
+    spec:
+      serviceAccountName: bookinfo-productpage
+      containers:
+        - env:
+          - name: OPENTRACING_ENABLED
+            value: "true"
+          - name: JAEGER_SAMPLER_TYPE
+            value: "probabilistic"
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: LATENCY_SAMPLER_PARAM
+            value: "1"
+          name: productpage
+          image: "docker.io/dymaczew/examples-bookinfo-productpage-v1:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          volumeMounts:
+          - mountPath: /opt/ibm/apm/serverconfig
+            name: global-environment
+          resources:
+            {}
+            
+      volumes:
+      - name: global-environment
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: icam-server-secret
+---
+# Source: bookinfo/charts/ratings/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-ratings
+  labels:
+    app.kubernetes.io/name: ratings
+    helm.sh/chart: ratings-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ratings
+      app.kubernetes.io/instance: bookinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ratings
+        app.kubernetes.io/instance: bookinfo
+    spec:
+      serviceAccountName: bookinfo-ratings
+      containers:
+        - env:
+          - name: DB_TYPE
+            value: mysql
+          - name: MYSQL_DB_HOST
+            value: mysqldb
+          - name: MYSQL_DB_PORT
+            value: "3306"
+          - name: MYSQL_DB_USER
+            value: root
+          - name: MYSQL_DB_PASSWORD
+            value: password
+          - name: OPENTRACING_ENABLED
+            value: "true"
+          - name: JAEGER_SAMPLER_TYPE
+            value: probabilistic
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: LATENCY_SAMPLER_PARAM
+            value: "1"
+          name: ratings
+          image: "docker.io/dymaczew/examples-bookinfo-ratings-v2:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          volumeMounts:
+          - mountPath: /opt/ibm/apm/serverconfig
+            name: global-environment
+          resources:
+            {}
+            
+      volumes:
+      - name: global-environment
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: icam-server-secret
+---
+# Source: bookinfo/charts/reviews/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-reviews
+  labels:
+    app.kubernetes.io/name: reviews
+    helm.sh/chart: reviews-0.1.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: reviews
+      app.kubernetes.io/instance: bookinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: reviews
+        app.kubernetes.io/instance: bookinfo
+    spec:
+      serviceAccountName: bookinfo-reviews
+      containers:
+        - env:
+          - name: OPENTRACING_ENABLED
+            value: "true"
+          - name: JAEGER_SAMPLER_TYPE
+            value: "probabilistic"
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: LATENCY_SAMPLER_PARAM
+            value: "1"
+          name: reviews
+          image: "docker.io/dymaczew/examples-bookinfo-reviews-v3:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          volumeMounts:
+          - mountPath: /opt/ibm/apm/serverconfig
+            name: global-environment
+          resources:
+            {}
+            
+      volumes:
+      - name: global-environment
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: icam-server-secret
+---
+# Source: bookinfo/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bookinfo
+  labels:
+    app.kubernetes.io/name: bookinfo
+    helm.sh/chart: bookinfo-1.0.0
+    app.kubernetes.io/instance: bookinfo
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  rules:
+    - host: "chart-example.local"
+      http:
+        paths:

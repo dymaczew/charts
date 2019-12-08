@@ -1,0 +1,12 @@
+apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+kind: ImagePolicy
+metadata:
+  name: bookinfo-policy
+  namespace: bookinfo
+spec:
+  repositories:
+  - name: docker.io/dymaczew/*
+    policy:
+      va:
+        enabled: false
+

@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Chart.Name }}-lwdc-query
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - clusters
+  - nodes
+  - services
+  - configmaps
+  - pods
+  verbs:
+  - list
+  - get

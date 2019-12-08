@@ -1,0 +1,23 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: bookinfo-app
+  labels:
+    chart: {{ template "bookinfo.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app: bookinfo-mcm
+spec:
+  selector:
+    matchExpressions:
+    - key: release
+      operator: In
+      values:
+      - {{ .Release.Name }}
+  componentKinds:
+  - group: core
+    kind: Service
+  - group: apps
+    kind: Deployment
+  - group: app.ibm.com
+    kind: Subscription

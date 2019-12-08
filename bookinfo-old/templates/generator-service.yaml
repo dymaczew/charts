@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Release.Name }}-generator"
+  labels:
+    app: "{{ .Release.Name }}-generator"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 3000
+      port: 3000
+      protocol: TCP
+      name: "http"
+  selector:
+    app: "{{ .Release.Name }}-generator"

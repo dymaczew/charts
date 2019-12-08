@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-generator"
+  chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: "{{ .Release.Name }}-generator"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-generator"
+    spec:
+      containers:
+      - name: "bookinfogen"
+        image: "ibmicpcoc/bookinfogen:latest"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http-server
+          containerPort: 3000

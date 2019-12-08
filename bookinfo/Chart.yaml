@@ -1,0 +1,16 @@
+apiVersion: v1
+appVersion: "1.0"
+description: A Helm chart for bookinfo app (Sample Istio app)
+name: bookinfo
+version: 1.0.0
+icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
+keywords:
+- sample
+- istio
+- bookinfo
+- ruby
+- python
+- liberty
+- mysql
+- ICAM
+- CloudPak

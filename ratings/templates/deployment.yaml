@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ratings.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ratings.name" . }}
+    helm.sh/chart: {{ include "ratings.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ratings.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ratings.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.icam.enabled }}
+      serviceAccountName: {{ .Values.icam.serviceAccount }}
+      {{- end }}
+      containers:
+        - env:
+          - name: DB_TYPE
+            value: mysql
+          - name: MYSQL_DB_HOST
+            value: mysqldb
+          - name: MYSQL_DB_PORT
+            value: "3306"
+          - name: MYSQL_DB_USER
+            value: root
+          - name: MYSQL_DB_PASSWORD
+            value: password
+          - name: OPENTRACING_ENABLED
+            value: "true"
+          - name: JAEGER_SAMPLER_TYPE
+            value: probabilistic
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: LATENCY_SAMPLER_PARAM
+            value: "1"
+          name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          volumeMounts:
+          - mountPath: /opt/ibm/apm/serverconfig
+            name: global-environment
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: global-environment
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: icam-server-secret
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
