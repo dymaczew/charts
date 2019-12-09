@@ -1,0 +1,15 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+  name: bookinfo-subscription
+  namespace: bookinfo
+spec:
+  channel: bookinfo/bookinfo-channel
+  source: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ 
+  name: bookinfo
+  placement:
+    placementRef:
+      name: dev-placementrule
+      kind: PlacementRule
