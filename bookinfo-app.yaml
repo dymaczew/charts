@@ -10,7 +10,7 @@ spec:
   source: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ 
   name: bookinfo
   packageFilter:
-    version: 1.x
+    version: 1.0.1
   placement:
     placementRef:
       name: dev-placementrule
