@@ -23,7 +23,16 @@ spec:
       serviceAccountName: {{ .Values.icam.serviceAccount }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - env:
+          - name: OPENTRACING_ENABLED
+            value: "true"
+          - name: JAEGER_SAMPLER_TYPE
+            value: "probabilistic"
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1"
+          - name: LATENCY_SAMPLER_PARAM
+            value: "1"
+          name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -38,8 +47,17 @@ spec:
             httpGet:
               path: /health
               port: http
+          volumeMounts:
+          - mountPath: /opt/ibm/apm/serverconfig
+            name: global-environment
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: global-environment
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: icam-server-secret
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
