@@ -14,3 +14,12 @@ rules:
   verbs:
   - list
   - get
+- apiGroups:
+  - extensions
+  attributeRestrictions: null
+  resourceNames:
+  - ibm-anyuid-psp
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
