@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: docker.io/dymaczew/examples-bookinfo-mysqldb
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""

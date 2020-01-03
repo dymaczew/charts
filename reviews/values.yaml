@@ -12,7 +12,7 @@ icam:
 image:
   repository: docker.io/dymaczew/examples-bookinfo-reviews-v3
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""

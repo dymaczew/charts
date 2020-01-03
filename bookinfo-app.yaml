@@ -13,13 +13,22 @@ spec:
     version: 1.0.1
   placement:
     placementRef:
-      name: dev-placementrule
+      name: demo-placementrule
       kind: PlacementRule
   overrides:
   - clusterName: "/"
     clusterOverrides:
     - path: "metadata.namespace"
       value: bookinfo
+  packageOverrides:
+  - packageName: bookinfo
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+    - path: spec.values
+      value: |
+        ingress:
+          host: bookinfo.apps.9.30.119.120.nip.io
 ---
 apiVersion: app.k8s.io/v1beta1
 kind: Application
@@ -64,3 +73,18 @@ spec:
     matchLabels:
       environment: Production
   clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: demo-placementrule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Demo
+  clusterReplicas: 1
+
