@@ -20,19 +20,19 @@ kubectl -n <my_namespace> create secret generic icam-server-secret \
 
 ## Regular helm installation
 
-# Creating the namespace and imagepolicy
+### Creating the namespace and imagepolicy
 To create a bookinfo namespace and authorize required images with the image policy run the following command:
 ```
 kubectl apply -f prereqs.yaml
 ```
 
-# Adding helm repo
+### Adding helm repo
 To add the helm repo as bookinfo-charts run
 ```
 helm init
 helm repo add bookinfo-charts https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/
 ```
-# Helm chart installation
+### Helm chart installation
 To install the chart with default values run
 ```
 helm install --name bookinfo --namespace bookinfo bookinfo --set ingress.host=bookinfo.<your_ingress_ip>.nip.io --tls
