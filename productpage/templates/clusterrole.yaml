@@ -12,7 +12,7 @@ rules:
   - services
   - configmaps
   - pods
-  - endpoins
+  - endpoints
   - deployments
   verbs:
   - list
