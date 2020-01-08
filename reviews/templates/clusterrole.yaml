@@ -5,12 +5,15 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - apps
   resources:
   - clusters
   - nodes
   - services
   - configmaps
   - pods
+  - endpoints
+  - deployments
   verbs:
   - list
   - get

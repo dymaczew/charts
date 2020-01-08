@@ -3,7 +3,27 @@ entries:
   bookinfo:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-01-03T19:09:28.33373+01:00
+    created: 2020-01-08T10:48:37.210396+01:00
+    description: A Helm chart for bookinfo app (based on sample Istio app)
+    digest: 9dcc362f03b4367da92969550bb9dcc4d7161e232ee954394c2f2a88a10d4351
+    icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
+    keywords:
+    - sample
+    - istio
+    - bookinfo
+    - ruby
+    - python
+    - liberty
+    - mysql
+    - ICAM
+    - CloudPak
+    name: bookinfo
+    urls:
+    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/bookinfo-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2020-01-08T10:48:37.208359+01:00
     description: A Helm chart for bookinfo app (based on sample Istio app)
     digest: 37c9c3d3b4c5e39c76227cd205ee6b1550e84290a9dcae963c8f75cf79092e31
     icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
@@ -23,7 +43,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-01-03T19:09:28.332179+01:00
+    created: 2020-01-08T10:48:37.206467+01:00
     description: A Helm chart for bookinfo app (based on sample Istio app)
     digest: 985da123a8fcc1e524cfc663781f05206b24e75335b92965eb8edbfc63927f50
     icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
@@ -43,7 +63,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-01-03T19:09:28.330601+01:00
+    created: 2020-01-08T10:48:37.204232+01:00
     description: A Helm chart for bookinfo app (Sample Istio app)
     digest: 0de3041c1f28aa462cfa56455d2808fde1f9fb24417f14158c6d412601f35dea
     icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
@@ -63,7 +83,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-01-03T19:09:28.328979+01:00
+    created: 2020-01-08T10:48:37.201768+01:00
     description: A Helm chart for bookinfo app (Sample Istio app)
     digest: 8dd722ce248107aa614a11e0ace51db139b131a88083bd4ba5a6a3545461ba8a
     icon: https://ibm-icp-coc.github.io/charts/repo/stable/bookinfo.png
@@ -81,54 +101,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/bookinfo-1.0.0.tgz
     version: 1.0.0
-  details:
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2020-01-03T19:09:28.334445+01:00
-    description: A Helm chart for Details service (part of Istio Bookinfo sample)
-    digest: 2a33c67946a4bff6da64683b0b7e29aba4ec73df94da3be0bfd2d2beac5c72fc
-    name: details
-    urls:
-    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/details-0.1.0.tgz
-    version: 0.1.0
-  mysqldb:
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2020-01-03T19:09:28.33518+01:00
-    description: A Helm chart for mysqldb service (part of Istio Bookinfo sample)
-    digest: e4cf7be459241b897fa75e503d369366ac399721b5077abf8863a49cf77a1e0d
-    name: mysqldb
-    urls:
-    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/mysqldb-0.1.1.tgz
-    version: 0.1.1
-  productpage:
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2020-01-03T19:09:28.33599+01:00
-    description: A Helm chart for Productpage service (part of Istio Bookinfo sample)
-    digest: 48b06bd2b8296a78141646cbe2067d26d34bd01e8f7af1e068c5b1180a3c9011
-    name: productpage
-    urls:
-    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/productpage-0.1.0.tgz
-    version: 0.1.0
-  ratings:
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2020-01-03T19:09:28.33672+01:00
-    description: A Helm chart for Kubernetes
-    digest: 16305177bb630677d3f0e28bb498b5f3d5d3fc8c71db70d015e2c8731be1b191
-    name: ratings
-    urls:
-    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ratings-0.1.0.tgz
-    version: 0.1.0
-  reviews:
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: 2020-01-03T19:09:28.33751+01:00
-    description: A Helm chart for Kubernetes
-    digest: 311f1a24fe1fbc7e8343b3182ad657228928bc28698d77583b5508455656d0f8
-    name: reviews
-    urls:
-    - https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/reviews-0.1.1.tgz
-    version: 0.1.1
-generated: 2020-01-03T19:09:28.325651+01:00
+generated: 2020-01-08T10:48:37.196621+01:00
