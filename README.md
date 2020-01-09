@@ -56,10 +56,42 @@ kubectl create namespace bookinfo-project
 kubectl apply -f bookinfo-channel.yaml
 ```
 3. Create a bookinfo application, subscription and placementrule CRDs:
+
+Edit bookinfo-app.yaml to specify the right chart version (as of Jan 9, 2020 it's 1.0.7) and ingress host name:
+```
+<pre>
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  source: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ 
+  name: bookinfo
+  packageFilter:
+    version: <b>1.0.7</b>
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: **bookinfo**
+  packageOverrides:
+  - packageName: bookinfo
+    packageOverrides:
+    - path: spec.releaseName
+      value: **bookinfo-demo**
+    - path: spec.values
+      value: |
+        ingress:
+          host: bookinfo.apps.9.30.119.120.nip.io
+</pre>
+
+```
+Apply the configuration with the following command:
 ```
 kubectl apply -f bookinfo-app.yaml
 ```
-This command will automatically install the bookinfo 1.0.1 chart to any managed cluster that has label environment=Demo
+This command will automatically install the bookinfo chart to any managed cluster that has label environment=Demo
 
 To change the behavior edit the bookinfo-app.yaml (e.g. to specify the correct ingress.host value for your environment)
 

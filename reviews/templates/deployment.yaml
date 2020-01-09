@@ -43,15 +43,19 @@ spec:
             httpGet:
               path: /health
               port: http
+          failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /health
               port: http
+          failureThreshold: 10
           volumeMounts:
           - mountPath: /opt/ibm/apm/serverconfig
             name: global-environment
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      securityContext:
+        runAsUser: 1001        
       volumes:
       - name: global-environment
         secret:
