@@ -1,1 +1,3 @@
 *.bak
+bookinfo-chart.code-workspace
+.gitignore
