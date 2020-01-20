@@ -15,6 +15,9 @@ kubectl -n <my_namespace> create secret generic icam-server-secret \
 --from-file=keyfiles/keyfile.jks \
 --from-file=keyfiles/keyfile.p12 \
 --from-file=keyfiles/keyfile.kdb \
+--from-file=keyfiles/ca.pem \
+--from-file=keyfiles/cert.pem \
+--from-file=keyfiles/key.pem \
 --from-file=global.environment
 ```
 
