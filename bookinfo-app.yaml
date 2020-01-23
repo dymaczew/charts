@@ -7,10 +7,9 @@ metadata:
   namespace: bookinfo-project
 spec:
   channel: bookinfo-entitlement/bookinfo-channel
-  source: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ 
   name: bookinfo
   packageFilter:
-    version: 1.0.7
+    version: 1.0.8
   placement:
     placementRef:
       name: demo-placementrule
