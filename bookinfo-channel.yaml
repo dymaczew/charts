@@ -6,10 +6,10 @@ metadata:
   name: bookinfo-channel
   namespace: bookinfo-entitlement
 spec:
-    pathname: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/
-    configRef:
-      name: insecure-skip-verify
-    type: HelmRepo
+  pathname: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/
+  configRef:
+    name: insecure-skip-verify
+  type: HelmRepo
 ---
 apiVersion: v1
 data:
