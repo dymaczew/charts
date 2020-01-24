@@ -85,5 +85,5 @@ spec:
   clusterLabels:
     matchLabels:
       environment: Demo
-  clusterReplicas: 1
+  clusterReplicas: 50
 
