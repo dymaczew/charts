@@ -1,7 +1,9 @@
-# charts
+# IBM Cloud App Management demo charts
 
 This is the repository containg artifacts used to install Bookinfo app for demonstrating the capabilities of IBM Cloud App Management.
 Bookinfo app is based on sample app from [Istio samples](https://github.com/istio/istio/tree/master/samples/bookinfo)
+
+![](images/2020-01-24-17-36-47.png)
 
 ## Prerequisites
 
@@ -60,7 +62,7 @@ kubectl apply -f bookinfo-channel.yaml
 ```
 3. Create a bookinfo application, subscription and placementrule CRDs:
 
-Edit bookinfo-app.yaml to modify chart version (as of Jan 9, 2020 it's 1.0.7), ingress host name, target namespace and helm release name:
+Edit bookinfo-app.yaml to modify chart version (as of Jan 24, 2020 it's 1.0.8), ingress host name, target namespace and helm release name:
 
 <pre>
 spec:
@@ -68,7 +70,7 @@ spec:
   source: https://raw.githubusercontent.com/dymaczew/charts/master/repo/incubator/ 
   name: bookinfo
   packageFilter:
-    version: <b>1.0.7</b>
+    version: <b>1.0.8</b>
   placement:
     placementRef:
       name: demo-placementrule
@@ -87,7 +89,19 @@ spec:
       value: |
         ingress:
           host: <b>bookinfo.apps.9.30.119.120.nip.io</b>
+        details:
+          replicaCount: 2
+        reviews:
+          replicaCount: 3
+        ratings
+          replicaCount: 1
+        productpage
+          replicaCount: 2
+        mysqldb:
+          replicaCount: 1
 </pre>
+
+You can customize the number of replicas for each microservice - if you want the smallest footprint change all values to 1. In order to generate slow response time events you can scale mysqldb to 0. 
 
 Apply the configuration with the following command:
 ```
@@ -96,6 +110,11 @@ kubectl apply -f bookinfo-app.yaml
 This command will automatically install the bookinfo chart to any managed cluster that has label environment=Demo
 
 To change the behavior edit the bookinfo-app.yaml (e.g. to specify the correct ingress.host value for your environment)
+
+## Troubleshooting
+
+[Jan 24th, 2020] In a current version, python data collector embedded in productpage microservice is crashing with error 500 if it cannot find the working icam-server-secret. 
+
 
 ## References & Useful Links
 

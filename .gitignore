@@ -1,3 +1,4 @@
 *.bak
 bookinfo-chart.code-workspace
 .gitignore
+.DS_Store
