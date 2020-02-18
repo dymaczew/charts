@@ -1,0 +1,110 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-flat
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: bookinfo-flat
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
+  - packageName: bookinfo
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+    - path: spec.values
+      value: |
+        ingress:
+          host: bookinfo.apps.9.30.119.120.nip.io
+  - packageName: details
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+  - packageName: productpage
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+  - packageName: ratings
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+  - packageName: reviews
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+  - packageName: mysqldb
+    packageOverrides:
+    - path: spec.releaseName
+      value: bookinfo-demo
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: bookinfo-app-flat
+  namespace: bookinfo-project
+spec:
+  selector:
+    matchExpressions:
+    - key: appname
+      operator: In
+      values:
+      - bookinfo-flat
+  componentKinds:
+  - group: app.ibm.com/v1alpha1
+    kind: Subscription
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: dev-placementrule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: production-placementrule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Production
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: demo-placementrule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Demo
+  clusterReplicas: 1
+
