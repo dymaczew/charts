@@ -43,11 +43,13 @@ spec:
             httpGet:
               path: /health
               port: http
+            initialDelaySeconds: 120
           failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /health
               port: http
+            initialDelaySeconds: 120
           failureThreshold: 10
           volumeMounts:
           - mountPath: /opt/ibm/apm/serverconfig
