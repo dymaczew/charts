@@ -4,11 +4,11 @@ metadata:
   labels:
     purpose: icam-demo
     appname: bookinfo-flat
-  name: bookinfo-subscription-flat
+  name: bookinfo-subscription-bookinfo
   namespace: bookinfo-project
 spec:
   channel: bookinfo-entitlement/bookinfo-channel
-  name: bookinfo-flat
+  name: bookinfo
   packageFilter:
     version: 1.1.0
   placement:
@@ -28,27 +28,147 @@ spec:
     - path: spec.values
       value: |
         ingress:
-          host: bookinfo.apps.9.30.119.120.nip.io
+          host: bookinfo.9.30.119.120.nip.io
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-details
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: details
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
   - packageName: details
     packageOverrides:
     - path: spec.releaseName
-      value: bookinfo-demo
+      value: bookinfo-demo-details
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-productpage
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: productpage
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
   - packageName: productpage
     packageOverrides:
     - path: spec.releaseName
-      value: bookinfo-demo
+      value: bookinfo-demo-productpage
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-ratings
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: ratings
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
   - packageName: ratings
     packageOverrides:
     - path: spec.releaseName
-      value: bookinfo-demo
+      value: bookinfo-demo-ratings
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-reviews
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: reviews
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
   - packageName: reviews
     packageOverrides:
     - path: spec.releaseName
-      value: bookinfo-demo
+      value: bookinfo-demo-reviews
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-flat
+  name: bookinfo-subscription-mysqldb
+  namespace: bookinfo-project
+spec:
+  channel: bookinfo-entitlement/bookinfo-channel
+  name: mysqldb
+  packageFilter:
+    version: 1.1.0
+  placement:
+    placementRef:
+      name: demo-placementrule
+      kind: PlacementRule
+  overrides:
+  - clusterName: "/"
+    clusterOverrides:
+    - path: "metadata.namespace"
+      value: bookinfo
+  packageOverrides:
   - packageName: mysqldb
     packageOverrides:
     - path: spec.releaseName
-      value: bookinfo-demo
+      value: bookinfo-demo-mysqldb
 ---
 apiVersion: app.k8s.io/v1beta1
 kind: Application
@@ -58,53 +178,10 @@ metadata:
 spec:
   selector:
     matchExpressions:
-    - key: appname
+    - key: purpose
       operator: In
       values:
-      - bookinfo-flat
+      - icam-demo
   componentKinds:
   - group: app.ibm.com/v1alpha1
     kind: Subscription
----
-apiVersion: app.ibm.com/v1alpha1
-kind: PlacementRule
-metadata:
-  name: dev-placementrule
-  namespace: bookinfo-project
-  generation: 1
-  labels:
-    purpose: icam-demo
-spec:
-  clusterLabels:
-    matchLabels:
-      environment: Dev
-  clusterReplicas: 1
----
-apiVersion: app.ibm.com/v1alpha1
-kind: PlacementRule
-metadata:
-  name: production-placementrule
-  namespace: bookinfo-project
-  generation: 1
-  labels:
-    purpose: icam-demo
-spec:
-  clusterLabels:
-    matchLabels:
-      environment: Production
-  clusterReplicas: 1
----
-apiVersion: app.ibm.com/v1alpha1
-kind: PlacementRule
-metadata:
-  name: demo-placementrule
-  namespace: bookinfo-project
-  generation: 1
-  labels:
-    purpose: icam-demo
-spec:
-  clusterLabels:
-    matchLabels:
-      environment: Demo
-  clusterReplicas: 1
-
