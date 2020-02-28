@@ -3,8 +3,11 @@
 apiVersion: app.ibm.com/v1alpha1
 kind: Channel
 metadata:
-  name: bookinfo-channel
-  namespace: bookinfo-github
+  name: bookinfo-ns-channel
+  namespace: bookinfo-source
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-demo
 spec:
-    type: GitHub
-    pathname: https://github.com/dymaczew/charts.git
+  type: Namespace
+  pathname: bookinfo-source  

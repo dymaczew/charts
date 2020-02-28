@@ -42,7 +42,7 @@ To install the chart with default values run
 ```
 helm install --name bookinfo --namespace bookinfo bookinfo --set ingress.host=bookinfo.<your_ingress_ip>.nip.io --tls
 ```
-## Installation as MCM app
+## Installation as helm-based MCM app
 
 To install bookinfo as MCM app you need a cluster with IBM CloudPak for Multicluster Management 1.2
 
@@ -110,6 +110,25 @@ kubectl apply -f bookinfo-app.yaml
 This command will automatically install the bookinfo chart to any managed cluster that has label environment=Demo
 
 To change the behavior edit the bookinfo-app.yaml (e.g. to specify the correct ingress.host value for your environment)
+
+## Installation as native MCM app
+
+To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2
+
+1. Create namespaces **bookinfo-source** and **bookinfo-project**. For Openshift run:
+```
+oc new-project bookinfo-source
+oc new-project bookinfo-project
+```
+
+2. Create a bookinfo channel:
+```
+kubectl apply -f bookinfo-ns-channel.yaml
+```
+3. Create a bookinfo application, subscription and placementrule CRDs:
+```
+kubectl apply -f bookinfo-flat-app.yaml
+```
 
 ## Troubleshooting
 
