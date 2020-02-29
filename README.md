@@ -1,6 +1,18 @@
 # IBM Cloud App Management demo charts
 
 This is the repository containg artifacts used to install Bookinfo app for demonstrating the capabilities of IBM Cloud App Management.
+
+- [IBM Cloud App Management demo charts](#ibm-cloud-app-management-demo-charts)
+  - [Prerequisites](#prerequisites)
+  - [Regular helm installation](#regular-helm-installation)
+    - [Creating the namespace and imagepolicy](#creating-the-namespace-and-imagepolicy)
+    - [Adding helm repo](#adding-helm-repo)
+    - [Helm chart installation](#helm-chart-installation)
+  - [Installation as helm-based MCM app](#installation-as-helm-based-mcm-app)
+  - [Installation as native MCM app](#installation-as-native-mcm-app)
+  - [Troubleshooting](#troubleshooting)
+  - [References & Useful Links](#references--useful-links)
+
 Bookinfo app is based on sample app from [Istio samples](https://github.com/istio/istio/tree/master/samples/bookinfo)
 
 ![](images/2020-01-24-17-36-47.png)
