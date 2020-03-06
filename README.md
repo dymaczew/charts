@@ -128,19 +128,35 @@ To change the behavior edit the bookinfo-app.yaml (e.g. to specify the correct i
 To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2
 
 1. Create namespaces **bookinfo-source** and **bookinfo-project**. For Openshift run:
-```
-oc new-project bookinfo-source
-oc new-project bookinfo-project
-```
+
+   ```bash
+   oc new-project bookinfo-source
+   oc new-project bookinfo-project
+   ```
 
 2. Create a bookinfo channel:
-```
-kubectl apply -f bookinfo-ns-channel.yaml
-```
-3. Create a bookinfo application, subscription and placementrule CRDs:
-```
-kubectl apply -f bookinfo-flat-app.yaml
-```
+
+   ```bash
+   kubectl apply -f bookinfo-ns-channel.yaml
+   ```
+
+3. Create a bookinfo placementrules
+
+   ```bash
+   kubectl apply -f bookinfo-placementrules.yaml
+   ```
+
+4. Create a bookinfo application deployables:
+
+   ```bash
+   kubectl apply -f bookinfo-deployable.yaml
+   ```
+
+5. Create a bookinfo application and subscription CRDs:
+
+   ```bash
+   kubectl apply -f bookinfo-flat-app.yaml
+   ```
 
 ## Troubleshooting
 
