@@ -2,8 +2,8 @@ apiVersion: app.ibm.com/v1alpha1
 kind: Subscription
 metadata:
   labels:
-    purpose: icam-demo
-  name: bookinfo-flat-subscription
+    purpose: icam-demo-prereq
+  name: bookinfo-prereq-subscription
   namespace: bookinfo-project
 spec:
   channel: bookinfo-source/bookinfo-ns-channel
@@ -11,7 +11,7 @@ spec:
     labelSelector:
       matchLabels:
         appname: bookinfo-demo
-        prereq: "no"
+        prereq: "yes"
   placement:
     placementRef:
       name: demo-placementrule
@@ -25,7 +25,7 @@ spec:
 apiVersion: app.k8s.io/v1beta1
 kind: Application
 metadata:
-  name: bookinfo-app
+  name: bookinfo-app-prereq
   namespace: bookinfo-project
 spec:
   selector:
@@ -33,7 +33,8 @@ spec:
     - key: purpose
       operator: In
       values:
-      - icam-demo
+      - icam-demo-prereq
   componentKinds:
   - group: app.ibm.com/v1alpha1
     kind: Subscription
+
