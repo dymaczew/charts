@@ -155,6 +155,7 @@ To install bookinfo as MCM native app you need a cluster with IBM CloudPak for M
 5. Create a bookinfo application and subscription CRDs:
 
    ```bash
+   kubectl apply -f bookinfo-prereq.yaml
    kubectl apply -f bookinfo-flat-app.yaml
    ```
 
