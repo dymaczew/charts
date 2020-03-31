@@ -617,7 +617,7 @@ spec:
           containers:
             - env:
               - name: OPENTRACING_ENABLED
-                value: "true"
+                value: "false"
               - name: JAEGER_SAMPLER_TYPE
                 value: "probabilistic"
               - name: JAEGER_SAMPLER_PARAM
