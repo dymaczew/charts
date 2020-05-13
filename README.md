@@ -25,7 +25,7 @@ This app to function correctly requires ICAM configuration secret created in a t
 
 Go to the ibm-cloud-apm-dc-configpack directory where you extract the configuration package and run the following command to create a secret to connect to the server, for example, name it as icam-server-secret.
 ```
-kubectl -n <my_namespace> create secret generic icam-server-secret \
+kubectl -n bookinfo create secret generic icam-server-secret \
 --from-file=keyfiles/keyfile.jks \
 --from-file=keyfiles/keyfile.p12 \
 --from-file=keyfiles/keyfile.kdb \
