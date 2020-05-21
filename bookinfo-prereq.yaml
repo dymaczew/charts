@@ -14,7 +14,7 @@ spec:
         prereq: "yes"
   placement:
     placementRef:
-      name: demo-placementrule
+      name: dev-placementrule
       kind: PlacementRule
   overrides:
   - clusterName: "/"
