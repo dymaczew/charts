@@ -1,0 +1,70 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: productpage-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: details-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: reviews-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: ratings-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: mysqldb-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1
+  

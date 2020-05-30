@@ -1,0 +1,13 @@
+# Create a Channel that declares resources that can be deployed
+# Channel can be a Namespace, Object Store Bucket, or Helm Repo
+apiVersion: app.ibm.com/v1alpha1
+kind: Channel
+metadata:
+  name: bookinfo-ns-channel
+  namespace: bookinfo-source
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-demo
+spec:
+  type: Namespace
+  pathname: bookinfo-source  

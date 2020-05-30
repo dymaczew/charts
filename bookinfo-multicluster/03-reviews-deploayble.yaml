@@ -1,0 +1,214 @@
+# Source: bookinfo/charts/reviews/templates/service-account.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-reviews-sa-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: reviews
+    prereq: "yes"
+spec:
+  template:
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: bookinfo-reviews
+---
+# Source: bookinfo/charts/reviews/templates/clusterrole.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-reviews-rbac-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: reviews
+    prereq: "yes"
+spec:
+  template:
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      name: reviews-lwdc-query
+    rules:
+    - apiGroups:
+      - ""
+      - apps
+      resources:
+      - clusters
+      - nodes
+      - services
+      - configmaps
+      - pods
+      - endpoints
+      - deployments
+      verbs:
+      - list
+      - get
+    - apiGroups:
+      - extensions
+      attributeRestrictions: null
+      resourceNames:
+      - ibm-anyuid-psp
+      resources:
+      - podsecuritypolicies
+      verbs:
+      - use
+    - apiGroups:
+      - security.openshift.io 
+      resources:
+      - securitycontextconstraints 
+      verbs:
+      - use
+      resourceNames:
+      - anyuid
+---
+# Source: bookinfo/charts/reviews/templates/rolebinding.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-reviews-crb-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: reviews
+    prereq: "yes"
+spec:
+  template:
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: reviews-lwdc-rolebinding
+      namespace: bookinfo
+    subjects:
+    - kind: User
+      name: system:serviceaccount:bookinfo:bookinfo-reviews
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: reviews-lwdc-query
+      apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/reviews/templates/service.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-reviews-svc-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: reviews
+    prereq: "no"
+spec:
+  template:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: reviews
+      labels:
+        app.kubernetes.io/name: reviews
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      type: ClusterIP
+      ports:
+        - port: 9080
+          targetPort: http
+          protocol: TCP
+          name: http
+      selector:
+        app.kubernetes.io/name: reviews
+        app.kubernetes.io/instance: bookinfo-demo
+
+---
+# Source: bookinfo/charts/reviews/templates/deployment.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-reviews-deploy-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: reviews
+    prereq: "no"
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: bookinfo-demo-reviews
+      labels:
+        app.kubernetes.io/name: reviews
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: reviews
+          app.kubernetes.io/instance: bookinfo-demo
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: reviews
+            app.kubernetes.io/instance: bookinfo-demo
+        spec:
+          serviceAccountName: bookinfo-reviews
+          containers:
+            - env:
+              - name: OPENTRACING_ENABLED
+                value: "true"
+              - name: JAEGER_SAMPLER_TYPE
+                value: "probabilistic"
+              - name: JAEGER_SAMPLER_PARAM
+                value: "1"
+              - name: LATENCY_SAMPLER_PARAM
+                value: "1"
+              name: reviews
+              image: "docker.io/dymaczew/examples-bookinfo-reviews-v3:2020.1.0.1"
+              imagePullPolicy: Always
+              ports:
+                - name: http
+                  containerPort: 9080
+                  protocol: TCP
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+                initialDelaySeconds: 120
+              failureThreshold: 6
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+                initialDelaySeconds: 120
+              failureThreshold: 10
+              volumeMounts:
+              - mountPath: /opt/ibm/apm/serverconfig
+                name: global-environment
+              resources:
+                {}                
+          securityContext:
+            runAsUser: 1001        
+          volumes:
+          - name: global-environment
+            secret:
+              defaultMode: 420
+              optional: true
+              secretName: icam-server-secret
+
+---

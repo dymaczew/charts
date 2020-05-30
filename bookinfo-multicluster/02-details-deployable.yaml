@@ -1,0 +1,216 @@
+# Source: bookinfo/charts/details/templates/service-account.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-sa-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "yes"
+spec:
+  template:
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: bookinfo-details
+---
+# Source: bookinfo/charts/details/templates/clusterrole.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-rbac-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "yes"
+spec:
+  template:
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      name: details-lwdc-query
+    rules:
+    - apiGroups:
+      - ""
+      - apps
+      resources:
+      - clusters
+      - nodes
+      - services
+      - configmaps
+      - pods
+      - endpoints
+      - deployments
+      verbs:
+      - list
+      - get
+---
+# Source: bookinfo/charts/details/templates/rolebinding.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-crb-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "yes"
+spec:
+  template:
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: details-lwdc-rolebinding
+      namespace: bookinfo
+    subjects:
+    - kind: User
+      name: system:serviceaccount:bookinfo:bookinfo-details
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: details-lwdc-query
+      apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-crb2-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "yes"
+spec:
+  template:
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: details-anyuid-rolebinding
+      namespace: bookinfo
+    subjects:
+    - kind: Group
+      name: system:serviceaccounts:bookinfo
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: ibm-anyuid-clusterrole
+      apiGroup: rbac.authorization.k8s.io
+---
+# Source: bookinfo/charts/details/templates/service.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-svc-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "no"
+spec:
+  template:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: details
+      labels:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      type: ClusterIP
+      ports:
+        - port: 9080
+          targetPort: http
+          protocol: TCP
+          name: http
+      selector:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+---
+# Source: bookinfo/charts/details/templates/deployment.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-deploy-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "no"
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: bookinfo-demo-details
+      labels:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: details
+          app.kubernetes.io/instance: bookinfo-demo
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: details
+            app.kubernetes.io/instance: bookinfo-demo
+        spec:
+          serviceAccountName: bookinfo-details
+          containers:
+            - env:
+              - name: OPENTRACING_ENABLED
+                value: "false"
+              - name: JAEGER_SAMPLER_TYPE
+                value: "probabilistic"
+              - name: JAEGER_SAMPLER_PARAM
+                value: "1"
+              - name: LATENCY_SAMPLER_PARAM
+                value: "1"
+              name: details
+              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.1.0.1"
+              imagePullPolicy: Always
+              ports:
+                - name: http
+                  containerPort: 9080
+                  protocol: TCP
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+              volumeMounts:
+              - mountPath: /opt/ibm/apm/serverconfig
+                name: global-environment
+              resources:
+                {}            
+          volumes:
+          - name: global-environment
+            secret:
+              defaultMode: 420
+              optional: true
+              secretName: icam-server-secret
