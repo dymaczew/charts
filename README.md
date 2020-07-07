@@ -65,7 +65,7 @@ To install bookinfo as MCM native app you need a cluster with IBM CloudPak for M
 3. Create a bookinfo channel
 
    ```bash
-   kubectl apply -f 06-bookinfo-channel.yaml
+   kubectl apply -f 06-bookinfo-ns-channel.yaml
    ```
 
 4. Create a bookinfo placementrules:
