@@ -45,7 +45,6 @@ spec:
         app.kubernetes.io/name: mysqldb
         app.kubernetes.io/instance: bookinfo-demo
     spec:
-      type: ClusterIP
       ports:
         - port: 3306
           protocol: TCP

@@ -106,7 +106,6 @@ spec:
         app.kubernetes.io/name: ratings
         app.kubernetes.io/instance: bookinfo-demo
     spec:
-      type: ClusterIP
       ports:
         - port: 9080
           targetPort: http
