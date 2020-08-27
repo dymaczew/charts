@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
   labels:
     purpose: icam-demo
-  name: productpage-subscription
+  name: bookinfo-subscription
   namespace: bookinfo-project
 spec:
   channel: bookinfo-source/bookinfo-ns-channel
@@ -11,106 +11,9 @@ spec:
     labelSelector:
       matchLabels:
         appname: bookinfo-demo
-        component: productpage
   placement:
     placementRef:
       name: productpage-rule
-      kind: PlacementRule
-  overrides:
-  - clusterName: "/"
-    clusterOverrides:
-    - path: "metadata.namespace"
-      value: bookinfo
----
-apiVersion: app.ibm.com/v1alpha1
-kind: Subscription
-metadata:
-  labels:
-    purpose: icam-demo
-  name: details-subscription
-  namespace: bookinfo-project
-spec:
-  channel: bookinfo-source/bookinfo-ns-channel
-  packageFilter:
-    labelSelector:
-      matchLabels:
-        appname: bookinfo-demo
-        component: details
-  placement:
-    placementRef:
-      name: details-rule
-      kind: PlacementRule
-  overrides:
-  - clusterName: "/"
-    clusterOverrides:
-    - path: "metadata.namespace"
-      value: bookinfo
----
-apiVersion: app.ibm.com/v1alpha1
-kind: Subscription
-metadata:
-  labels:
-    purpose: icam-demo
-  name: reviews-subscription
-  namespace: bookinfo-project
-spec:
-  channel: bookinfo-source/bookinfo-ns-channel
-  packageFilter:
-    labelSelector:
-      matchLabels:
-        appname: bookinfo-demo
-        component: reviews
-  placement:
-    placementRef:
-      name: reviews-rule
-      kind: PlacementRule
-  overrides:
-  - clusterName: "/"
-    clusterOverrides:
-    - path: "metadata.namespace"
-      value: bookinfo
----
-apiVersion: app.ibm.com/v1alpha1
-kind: Subscription
-metadata:
-  labels:
-    purpose: icam-demo
-  name: ratings-subscription
-  namespace: bookinfo-project
-spec:
-  channel: bookinfo-source/bookinfo-ns-channel
-  packageFilter:
-    labelSelector:
-      matchLabels:
-        appname: bookinfo-demo
-        component: ratings
-  placement:
-    placementRef:
-      name: ratings-rule
-      kind: PlacementRule
-  overrides:
-  - clusterName: "/"
-    clusterOverrides:
-    - path: "metadata.namespace"
-      value: bookinfo
----
-apiVersion: app.ibm.com/v1alpha1
-kind: Subscription
-metadata:
-  labels:
-    purpose: icam-demo
-  name: mysqldb-subscription
-  namespace: bookinfo-project
-spec:
-  channel: bookinfo-source/bookinfo-ns-channel
-  packageFilter:
-    labelSelector:
-      matchLabels:
-        appname: bookinfo-demo
-        component: mysqldb
-  placement:
-    placementRef:
-      name: mysqldb-rule
       kind: PlacementRule
   overrides:
   - clusterName: "/"
