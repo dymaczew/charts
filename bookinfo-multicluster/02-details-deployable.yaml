@@ -180,7 +180,7 @@ spec:
           containers:
             - env:
               - name: OPENTRACING_ENABLED
-                value: "false"
+                value: "true"
               - name: JAEGER_SAMPLER_TYPE
                 value: "probabilistic"
               - name: JAEGER_SAMPLER_PARAM
@@ -188,7 +188,7 @@ spec:
               - name: LATENCY_SAMPLER_PARAM
                 value: "1"
               name: details
-              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.1.0.1"
+              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.2.0"
               imagePullPolicy: Always
               ports:
                 - name: http
