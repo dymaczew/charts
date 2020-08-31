@@ -23,6 +23,8 @@ This app to function correctly requires ICAM configuration secret created in a t
 
 [Obtaining the server configuration information](https://www.ibm.com/support/knowledgecenter/en/SSFC4F_1.3.0/icam/dc_config_server_info.html)
 
+**UPDATE** Even for CloudPak 2.0 it is still true as productpage service hasn't been updated to 2020.2.0 (I am chasing the bug in Python data collector)
+
 Go to the ibm-cloud-apm-dc-configpack directory where you extract the configuration package and run the following command to create a secret to connect to the server, for example, name it as icam-server-secret.
 ```
 kubectl -n bookinfo create secret generic icam-server-secret \
@@ -38,6 +40,7 @@ kubectl -n bookinfo create secret generic icam-server-secret \
 ## Installation as native Mulicluster app
 
 To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2 or newer
+For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. See [here](How to install cloud native monitoring on managed clusters.md) some hints how to do this
 
 0. Clone this repo to your local workstation
 
@@ -84,7 +87,7 @@ To install bookinfo as MCM native app you need a cluster with IBM CloudPak for M
 
 6. By default the `01-productpage-deployable.yaml` includes the deployable for ingress  with "/bookinfo" path. You may wish to customize or add the route deployable for deployments on OpenShift clusters
    
-HINT: Target kluster should have a ICAM klusterlet deployed. In order to see a service deployment topology you need to generate some traffic against the application.
+HINT: Target cluster should have a ICAM klusterlet deployed. In order to see a service deployment topology you need to generate some traffic against the application. 
 
 
 ## Legacy method 1: helm chart installation
