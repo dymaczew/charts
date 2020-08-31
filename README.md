@@ -40,7 +40,7 @@ kubectl -n bookinfo create secret generic icam-server-secret \
 ## Installation as native Mulicluster app
 
 To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2 or newer
-For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. See [here](How to install cloud native monitoring on managed clusters.md) some hints how to do this
+For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. See [here](./How\ to\ install\ cloud\ native\ monitoring\ on\ managed\ clusters.md) some hints how to do this
 
 0. Clone this repo to your local workstation
 
