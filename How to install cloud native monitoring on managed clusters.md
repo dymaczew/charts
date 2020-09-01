@@ -109,6 +109,13 @@ oc patch deployable.app.ibm.com/cnmon-pullsecret-deployable -p `echo {\"spec\":{
 --type merge -n management-monitoring`
 ```
 
+**For MacOS** On new Macs the base64 uses different syntax so use the command shown below:
+
+```bash
+oc patch deployable.app.ibm.com/cnmon-pullsecret-deployable -p `echo {\"spec\":{\"template\":{\"data\":{\".dockerconfigjson\":\"$(cat $HOME/.docker/config.json | base64 )\"}}}}` \
+--type merge -n management-monitoring`
+```
+
 4. Verify that the deployables are created and pointing to right places
 
 ```bash
@@ -130,7 +137,7 @@ oc patch cluster microk8s -n microk8s -p '{"metadata":{"labels":{"ibm.com/cloud-
 
 3. **IMPORTANT** Add the namespace that holds the cluster object (it is named the same as a managed cluster) as a managed resource to the team that owns the monitoring tenant.
 
-Below, there are commands that you would use for a managed cluster named `microk8s` and the default tenant ( *team id* and *account id* may be different at each installation)
+Below there are commands that you would use for a managed cluster named `microk8s` and the default tenant ( *team id* and *account id* may be different at each installation)
 
 ```bash
 [ibmuser@admin ~]$ cloudctl iam accounts
@@ -156,7 +163,7 @@ Resource crn:v1:icp:private:k8:mycluster:n/microk8s::: added
 OK
 ```
 
-4. **IMPORTANT** Login as the user that was onboarded to the ICAM tenant and in the UI open the Monitoring-> Incidents (basically the ICAM UI) - which will trigger the process of deploying the Unified Agent and k8sdc to the managed cluster
+4. **IMPORTANT** Login as the used that was onboarded to the ICAM tenant and in the UI open the Monitoring-> Incidents (basically the ICAM UI) - which will trigger the process of deploying the Unified agent and k8sdc to the managed cluster
    
 5. Verification on the managed cluster
 

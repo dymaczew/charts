@@ -50,6 +50,12 @@ For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud 
    cd charts/bookinfo-multicluster
    ```
 
+   If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.0
+
+   ```bash
+   cd charts/bookinfo-multicluster-2020.2.0
+   ```
+
 1. Create namespaces **bookinfo**, **bookinfo-source** and **bookinfo-project** and ImagePolicy (in case you have the admission controller installed)
 
    ```bash
