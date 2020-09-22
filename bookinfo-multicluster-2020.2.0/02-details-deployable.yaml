@@ -1,31 +1,3 @@
-apiVersion: app.ibm.com/v1alpha1
-kind: Deployable
-metadata:
-  annotations:
-    app.ibm.com/is-local-deployable: "false"
-  name: bookinfo-details-crb2-deployable
-  namespace: bookinfo-source
-  labels:
-    appname: bookinfo-demo
-    release: bookinfo-demo
-    component: details
-    prereq: "yes"
-spec:
-  template:
-    kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1
-    metadata:
-      name: details-anyuid-rolebinding
-      namespace: bookinfo
-    subjects:
-    - kind: Group
-      name: system:serviceaccounts:bookinfo
-      apiGroup: rbac.authorization.k8s.io
-    roleRef:
-      kind: ClusterRole
-      name: ibm-anyuid-clusterrole
-      apiGroup: rbac.authorization.k8s.io
----
 # Source: bookinfo/charts/details/templates/service.yaml
 apiVersion: app.ibm.com/v1alpha1
 kind: Deployable
