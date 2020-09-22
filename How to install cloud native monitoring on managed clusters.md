@@ -15,7 +15,6 @@ Run `cloudctl login` against your cluster to authenticate, and then
 cloudctl catalog load-chart --archive ibm-cp4mcm-cloud-native-monitoring-1.3.0.tgz
 ```
 
-
 2. Edit the installation file to add the following section to the monitoring operand
 
 Default setting is
@@ -85,8 +84,7 @@ In the context it looks like this:
     name: monitoring
  ```
 
-3. Update the docker credentials. Login to entitled registry or any other target registry that you want to use. Even if your images are in publicly available registry you need to update the secret with the docker config
-   More detailed explanaition is in [IBM Cloud Pak Knowledge Center](https://www.ibm.com/support/knowledgecenter/pl/SSFC4F_2.0.0/icam/install_mcm_klusterlet_no_helm.html#configure_cnmon)
+3. Update the docker credentials. Login to entitled registry (or any other target registry that you want to use). Even if your images are in publicly available registry you need to update the secret with the docker config. More detailed explanaition is in [IBM Cloud Pak Knowledge Center](https://www.ibm.com/support/knowledgecenter/pl/SSFC4F_2.0.0/icam/install_mcm_klusterlet_no_helm.html#configure_cnmon)
 
 Make sure you have the following file `~/.docker/config.json` (it is automatically created after `docker login` command successful execution)
 
@@ -151,19 +149,22 @@ operations                                                         operations   
 
 [ibmuser@admin ~]$ cloudctl iam resources
 CRN   
-[.edited.]
+
+[...edited...]
+
 crn:v1:icp:private:k8:mycluster:n/management-security-services:::   
 crn:v1:icp:private:k8:mycluster:n/microk8s:::   
 crn:v1:icp:private:k8:mycluster:n/nfs-storage:::   
 crn:v1:icp:private:helm-catalog:mycluster:r/ibm-charts::helm-repos:   
-[edited.]
+
+[...edited...]
 
 [ibmuser@admin ~]$ cloudctl iam resource-add 4bb981605258ecc3abe012c4fa0b98a40dc57961e21883f303e3114af1126c83 -r crn:v1:icp:private:k8:mycluster:n/microk8s::: 
 Resource crn:v1:icp:private:k8:mycluster:n/microk8s::: added
 OK
 ```
 
-4. **IMPORTANT** Login as the used that was onboarded to the ICAM tenant and in the UI open the Monitoring-> Incidents (basically the ICAM UI) - which will trigger the process of deploying the Unified agent and k8sdc to the managed cluster
+4. **IMPORTANT** Login as the user that can access monitoring module (e.g. was onboarded to the ICAM tenant) and in the UI open the **Monitor health** -> **Incidents** (basically the ICAM UI) - which will trigger the process of deploying the Unified agent and k8sdc to the managed cluster
    
 5. Verification on the managed cluster
 
