@@ -169,18 +169,16 @@ spec:
                   containerPort: 9080
                   protocol: TCP
               livenessProbe:
-                httpGet:
-                  path: /health
-                  port: http
+                tcpSocket:
+                  port: 9080
               readinessProbe:
-                httpGet:
-                  path: /health
-                  port: http
+                tcpSocket:
+                  port: 9080
               volumeMounts:
               - mountPath: /opt/ibm/apm/serverconfig
                 name: global-environment
               resources:
-                {}               
+                {}
           volumes:
           - name: global-environment
             secret:

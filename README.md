@@ -3,8 +3,8 @@
 This is the repository containg artifacts used to install Bookinfo app for demonstrating the capabilities of monitoring module (former name: IBM Cloud App Management) of IBM Cloud Pak for Multicloud Management.
 
 - [IBM Cloud Pak for Multicloud Management demo applications](#ibm-cloud-pak-for-multicloud-management-demo-applications)
-  - [Prerequisites](#prerequisites)
   - [Installation as native Mulicluster app](#installation-as-native-mulicluster-app)
+  - [Prerequisite for installation on Cloud Pak for MCM 1.3.x](#prerequisite-for-installation-on-cloud-pak-for-mcm-13x)
   - [Legacy method 1: helm chart installation](#legacy-method-1-helm-chart-installation)
     - [Creating the namespace and imagepolicy](#creating-the-namespace-and-imagepolicy)
     - [Adding helm repo](#adding-helm-repo)
@@ -17,13 +17,52 @@ Bookinfo app is based on sample app from [Istio samples](https://github.com/isti
 
 ![](images/2020-01-24-17-36-47.png)
 
-## Prerequisites
 
-This app to function correctly requires ICAM configuration secret created in a target namespace (bookinfo by default) according to the ICAM Knowledge Center: 
+## Installation as native Mulicluster app
+
+To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2 or newer.
+
+For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
+
+1. Clone this repo to your local workstation
+
+   ```sh
+   git clone https://github.com/dymaczew/charts.git
+   cd charts
+   ```
+
+   If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.0
+
+   ```sh
+   oc apply -f bookinfo-multicluster-2020.2.0
+   ```
+
+1. Below you can find the explanantion of the content of the files in this directory:
+   
+   - **00-bookinfo-prereq.yaml**
+   contains definition of namespaces **bookinfo**, **bookinfo-source** and **bookinfo-project** and ImagePolicy (in case you have the admission controller installed)
+
+   - **files named 01-.. to 05-..**
+   contain definition of deployables for Bookinfo microservices
+
+   - **06-bookinfo-ns-channel.yaml**
+   contains definition of channel pointing at the namespace *bookinfo-source*
+
+   - **07-bookinfo-placementrules.yaml**
+   contains the placement rule by default targeting the cluster with label `environment=Dev`
+
+   - **08-bookinfo-multicluster.yaml**
+   contains the definiton of application and subscription
+
+2. By default the `01-productpage-deployable.yaml` includes the deployable for ingress  with "/bookinfo" path. You may wish to customize or add the route deployable for deployments on OpenShift clusters
+   
+HINT: Target cluster should have a ICAM klusterlet deployed. In order to see a service deployment topology you need to generate some traffic against the application. 
+
+## Prerequisite for installation on Cloud Pak for MCM 1.3.x
+
+This app to function correctly on version prior to 2.0 requires ICAM configuration secret created in a target namespace (bookinfo by default) according to the ICAM Knowledge Center: 
 
 [Obtaining the server configuration information](https://www.ibm.com/support/knowledgecenter/en/SSFC4F_1.3.0/icam/dc_config_server_info.html)
-
-**UPDATE** Even for CloudPak 2.0 it is still true as productpage service hasn't been updated to 2020.2.0 (I am chasing the bug in Python data collector)
 
 Go to the ibm-cloud-apm-dc-configpack directory where you extract the configuration package and run the following command to create a secret to connect to the server, for example, name it as icam-server-secret.
 ```
@@ -37,65 +76,11 @@ kubectl -n bookinfo create secret generic icam-server-secret \
 --from-file=global.environment
 ```
 
-## Installation as native Mulicluster app
+When the secret is created apply the files located in the **bookinfo-multicluster**
 
-To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2 or newer.
-
-For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
-
-0. Clone this repo to your local workstation
-
-   ```bash
-   git clone https://github.com/dymaczew/charts.git
-   cd charts/bookinfo-multicluster
-   ```
-
-   If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.0
-
-   ```bash
-   cd charts/bookinfo-multicluster-2020.2.0
-   ```
-
-1. Create namespaces **bookinfo**, **bookinfo-source** and **bookinfo-project** and ImagePolicy (in case you have the admission controller installed)
-
-   ```bash
-   kubectl apply -f 00-bookinfo-prereq.yaml
-   ```
-
-2. Create a bookinfo deployables:
-
-   ```bash
-   kubectl apply -f 01-productpage-deployable.yaml
-   kubectl apply -f 02-details-deployable.yaml
-   kubectl apply -f 03-reviews-deployable.yaml
-   kubectl apply -f 04-ratings-deployable.yaml
-   kubectl apply -f 05-mysqldb-deployable.yaml
-   ```
-
-3. Create a bookinfo channel
-
-   ```bash
-   kubectl apply -f 06-bookinfo-ns-channel.yaml
-   ```
-
-4. Create a bookinfo placementrules:
-
-   ```bash
-   kubectl apply -f 07-bookinfo-placementrules.yaml
-   ```
-
-   The placement rules by default target the cluster with label `environment=Dev`
-
-5. Create a bookinfo application and subscription CRDs:
-
-   ```bash
-   kubectl apply -f 08-bookinfo-multicluster.yaml
-   ```
-
-6. By default the `01-productpage-deployable.yaml` includes the deployable for ingress  with "/bookinfo" path. You may wish to customize or add the route deployable for deployments on OpenShift clusters
-   
-HINT: Target cluster should have a ICAM klusterlet deployed. In order to see a service deployment topology you need to generate some traffic against the application. 
-
+```sh
+oc apply -f bookinfo-multicluster
+```
 
 ## Legacy method 1: helm chart installation
 
