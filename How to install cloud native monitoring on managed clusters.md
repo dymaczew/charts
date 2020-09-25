@@ -7,7 +7,7 @@
 
 HINT: I have tweaked the helm chart to workaround a bug that prevented chart being deployed successfully on the Kubernetes cluster which has version with a '-' (dash) in name, like v1.18.1-6 or v1.14.0-gke
 
-Download the helm chart from BOX (https://ibm.box.com/s/wcfya46jkpebgh1tjt4oa6000ds2yy3j)
+Download the helm chart from BOX (https://ibm.box.com/s/kcxqbnbs0g0uuj1ikrlq29tqnjmjeq9o)
 
 Run `cloudctl login` against your cluster to authenticate, and then
 
