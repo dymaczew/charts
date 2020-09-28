@@ -89,7 +89,7 @@ spec:
                 tcpSocket:
                   port: 9080
               resources:
-                {}               
+                {}
 ---
 # Source: bookinfo/templates/ingress.yaml
 apiVersion: app.ibm.com/v1alpha1
@@ -113,11 +113,13 @@ spec:
       labels:
         app.kubernetes.io/name: bookinfo
         app.kubernetes.io/instance: bookinfo-demo
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
     spec:
       rules:
-          http:
-            paths:
-              - path: /bookinfo
-                backend:
-                  serviceName: productpage
-                  servicePort: 9080
+      - http:
+          paths:
+          - path: /bookinfo
+            backend:
+              serviceName: productpage
+              servicePort: 9080
