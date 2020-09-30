@@ -1,0 +1,35 @@
+# Source: bookinfo/templates/ingress.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-ingress-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: productpage
+    prereq: "no"
+spec:
+  template:
+    apiVersion: networking.k8s.io/v1beta1
+    kind: Ingress
+    metadata:
+      name: bookinfo-ingress
+      labels:
+        app.kubernetes.io/name: bookinfo
+        app.kubernetes.io/instance: bookinfo-demo
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    spec:
+      rules:
+      - http:
+          paths:
+          - path: /bookinfo
+            pathType: Prefix
+            backend:
+              service:
+                name: productpage
+                port:
+                  number: 9080
