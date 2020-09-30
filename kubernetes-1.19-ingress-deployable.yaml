@@ -24,7 +24,8 @@ spec:
         nginx.ingress.kubernetes.io/rewrite-target: /
     spec:
       rules:
-      - http:
+      - host: bookinfo.10.0.0.2.nip.io
+        http:
           paths:
           - path: /bookinfo
             pathType: Prefix
