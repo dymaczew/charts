@@ -27,7 +27,7 @@ spec:
       - host: bookinfo.10.0.0.2.nip.io
         http:
           paths:
-          - path: /bookinfo
+          - path: /
             pathType: Prefix
             backend:
               service:
