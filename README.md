@@ -18,11 +18,11 @@ Bookinfo app is based on sample app from [Istio samples](https://github.com/isti
 ![](images/2020-01-24-17-36-47.png)
 
 
-## Installation as native Mulicluster app
+## Installation as native multi-cluster app
 
-To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicluster Management 1.2 or newer.
+To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicloud Management 1.2 or newer.
 
-For IBM CloudPak for Multicluster Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
+For IBM Cloud Pak for Multicloud Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
 
 1. Clone this repo to your local workstation
 
