@@ -50,6 +50,7 @@ spec:
     metadata:
       name: bookinfo-demo-details
       labels:
+        runtime: go
         app.kubernetes.io/name: details
         app.kubernetes.io/instance: bookinfo-demo
     spec:
@@ -61,6 +62,7 @@ spec:
       template:
         metadata:
           labels:
+            runtime: go
             app.kubernetes.io/name: details
             app.kubernetes.io/instance: bookinfo-demo
         spec:
@@ -90,4 +92,4 @@ spec:
                   path: /health
                   port: http
               resources:
-                {}            
+                {}
