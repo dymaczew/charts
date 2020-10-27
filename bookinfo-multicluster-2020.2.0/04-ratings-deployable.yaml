@@ -51,6 +51,7 @@ spec:
     metadata:
       name: bookinfo-demo-ratings
       labels:
+        runtime: node
         app.kubernetes.io/name: ratings
         app.kubernetes.io/instance: bookinfo-demo
     spec:
@@ -62,6 +63,7 @@ spec:
       template:
         metadata:
           labels:
+            runtime: node
             app.kubernetes.io/name: ratings
             app.kubernetes.io/instance: bookinfo-demo
         spec:
@@ -101,5 +103,4 @@ spec:
                   path: /health
                   port: http
               resources:
-                {}                
-
+                {}
