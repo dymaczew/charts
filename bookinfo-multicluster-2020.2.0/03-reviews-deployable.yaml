@@ -51,6 +51,7 @@ spec:
     metadata:
       name: bookinfo-demo-reviews
       labels:
+        runtime: liberty
         app.kubernetes.io/name: reviews
         app.kubernetes.io/instance: bookinfo-demo
     spec:
@@ -62,6 +63,7 @@ spec:
       template:
         metadata:
           labels:
+            runtime: liberty
             app.kubernetes.io/name: reviews
             app.kubernetes.io/instance: bookinfo-demo
         spec:
@@ -95,7 +97,7 @@ spec:
                 initialDelaySeconds: 120
               failureThreshold: 10
               resources:
-                {}                
+                {}
           securityContext:
 
 ---

@@ -51,6 +51,7 @@ spec:
     metadata:
       name: bookinfo-demo-productpage
       labels:
+        runtime: python
         app.kubernetes.io/name: productpage
         app.kubernetes.io/instance: bookinfo-demo
     spec:
@@ -62,6 +63,7 @@ spec:
       template:
         metadata:
           labels:
+            runtime: python
             app.kubernetes.io/name: productpage
             app.kubernetes.io/instance: bookinfo-demo
         spec:
