@@ -1,3 +1,9 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sock-shop
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,18 +29,17 @@ spec:
           containerPort: 27017
         securityContext:
           capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        - mountPath: /data/db
+          name: data-volume
       volumes:
         - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        - name: data-volume
           emptyDir:
             medium: Memory
       nodeSelector:
@@ -93,13 +98,6 @@ spec:
         ports:
          - containerPort: 8081
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
         volumeMounts:
         - mountPath: /tmp
@@ -154,6 +152,13 @@ spec:
         ports:
         - name: mysql
           containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: data-volume
+      volumes:
+        - name: data-volume
+          emptyDir:
+            medium: Memory
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -207,17 +212,10 @@ spec:
           value: "INFO"
         name: catalogue
         image: dymaczew/catalogue:2020.2.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
       nodeSelector:
         beta.kubernetes.io/os: linux
@@ -267,7 +265,7 @@ spec:
           value: "1"
         name: front-end
         image: dymaczew/front-end:2020.2.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: 100m
@@ -275,11 +273,6 @@ spec:
         ports:
         - containerPort: 8079
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
           readOnlyRootFilesystem: false
       nodeSelector:
         beta.kubernetes.io/os: linux
@@ -296,7 +289,6 @@ spec:
   ports:
   - port: 80
     targetPort: 8079
-    nodePort: 30001
   selector:
     name: front-end
 ---
@@ -324,19 +316,17 @@ spec:
         - name: mongo
           containerPort: 27017
         securityContext:
-          capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
           readOnlyRootFilesystem: true
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        - mountPath: /data/db
+          name: data-volume
       volumes:
         - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        - name: data-volume
           emptyDir:
             medium: Memory
       nodeSelector:
@@ -392,17 +382,10 @@ spec:
           value: zipkin.cp4mcm-cloud-native-monitoring.svc.cluster.local
         name: orders
         image: dymaczew/orders:2020.2.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8082
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
         volumeMounts:
         - mountPath: /tmp
@@ -464,17 +447,10 @@ spec:
           value: "INFO"
         name: payment
         image: dymaczew/payment:2020.2.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
       nodeSelector:
         beta.kubernetes.io/os: linux
@@ -571,15 +547,15 @@ spec:
         ports:
         - containerPort: 5672
         securityContext:
-          capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
-              - DAC_OVERRIDE
           readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /var/lib/rabbitmq
+          name: data-volume
+      volumes:
+        - name: data-volume
+          emptyDir:
+            medium: Memory
+
       nodeSelector:
         beta.kubernetes.io/os: linux
 ---
@@ -637,13 +613,6 @@ spec:
         ports:
         - containerPort: 8080
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
         volumeMounts:
         - mountPath: /tmp
@@ -688,25 +657,26 @@ spec:
         name: user-db
     spec:
       containers:
-      - name: user-db
-        image: weaveworksdemos/user-db:0.4.0
+      - env:
+        - name: "MONGO_INITDB_DATABASE"
+          value: "users"
+        name: user-db
+        image: dymaczew/user-db:2020.2.1
         ports:
         - name: mongo
           containerPort: 27017
         securityContext:
-          capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
         volumeMounts:
         - mountPath: /tmp
           name: tmp-volume
+        - mountPath: /data/db
+          name: data-volume
       volumes:
         - name: tmp-volume
+          emptyDir:
+            medium: Memory
+        - name: data-volume
           emptyDir:
             medium: Memory
       nodeSelector:
@@ -768,13 +738,6 @@ spec:
         ports:
         - containerPort: 80
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 10001
-          capabilities:
-            drop:
-              - all
-            add:
-              - NET_BIND_SERVICE
           readOnlyRootFilesystem: false
       nodeSelector:
         beta.kubernetes.io/os: linux
