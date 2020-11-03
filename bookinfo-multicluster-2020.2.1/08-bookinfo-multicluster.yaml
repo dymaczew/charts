@@ -34,5 +34,5 @@ spec:
       values:
       - icam-demo
   componentKinds:
-  - group: app.ibm.com/v1alpha1
+  - group: app.ibm.com
     kind: Subscription

@@ -1,7 +1,10 @@
 # WeaveSocks demo 
 This demo application is based on https://microservices-demo.github.io by WeaveWorks
 
+![Architecture diagram](https://github.com/microservices-demo/microservices-demo.github.io/blob/HEAD/assets/Architecture.png "Architecture")
+
 As of Nov 3rd, 2020 it contains the following instrumented microservices: 
+
 - Front-End (NodeJS), 
 - Users (go), 
 - Orders (Java/Springboot)
@@ -9,7 +12,9 @@ As of Nov 3rd, 2020 it contains the following instrumented microservices:
 - Cart (go)
 - Queue-master (Java/Springboot)
 - Shipping (go)
+
 and few database backends/queue manager:
+
 - users-db (MongoDB)
 - cart-db (MongoDB)
 - orders-db (MongoDB)
@@ -33,6 +38,12 @@ To run the simulated user traffic against the application, run
 
 ```sh
 kubectl apply -f loadtest-dep.yaml
+```
+
+To increase the load, just scale deployment up:
+
+```sh
+kubectl -n loadtest scale deployment load-test --replica=2
 ```
 
 Tested on IKS 1.18 & OCP 4.3 with cloud-native-monitoring from Cloud Pak for Multicloud Management 2.1
