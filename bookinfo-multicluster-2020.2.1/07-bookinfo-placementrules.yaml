@@ -1,0 +1,13 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: bookinfo-rule
+  namespace: bookinfo-project
+  generation: 1
+  labels:
+    purpose: icam-demo
+spec:
+  clusterLabels:
+    matchLabels:
+      environment: Dev
+  clusterReplicas: 1

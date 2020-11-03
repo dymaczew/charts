@@ -1,0 +1,41 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-load-generator-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: load-generator
+    prereq: "no"
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: "bookinfo-load-generator"
+      namespace: bookinfo
+    spec:
+      replicas: 1
+      selector:
+          matchLabels:
+            app: "bookinfo-load-generator"
+      template:
+        metadata:
+          labels:
+            app: "bookinfo-load-generator"
+        spec:
+          containers:
+          - env:
+            - name: BOOKINFO_URL
+              value: "http://productpage:9080/productpage?u=normal"
+            - name: SLEEP_TIME
+              value: 1000
+            name: "bookinfogen"
+            image: "dymaczew/bookinfo-load-generator:1.0.0"
+            imagePullPolicy: IfNotPresent
+            ports:
+            - name: http-server
+              containerPort: 3000

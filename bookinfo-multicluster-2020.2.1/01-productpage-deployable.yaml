@@ -1,0 +1,127 @@
+# Source: bookinfo/charts/productpage/templates/service.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-productpage-svc-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: productpage
+    prereq: "no"
+spec:
+  template:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: productpage
+      labels:
+        app.kubernetes.io/name: productpage
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      ports:
+        - port: 9080
+          targetPort: http
+          protocol: TCP
+          name: http
+      selector:
+        app.kubernetes.io/name: productpage
+        app.kubernetes.io/instance: bookinfo-demo
+---
+---
+# Source: bookinfo/charts/productpage/templates/deployment.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-productpage-deploy-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: productpage
+    prereq: "no"
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: bookinfo-demo-productpage
+      labels:
+        runtime: python
+        app.kubernetes.io/name: productpage
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: productpage
+          app.kubernetes.io/instance: bookinfo-demo
+      template:
+        metadata:
+          labels:
+            runtime: python
+            app.kubernetes.io/name: productpage
+            app.kubernetes.io/instance: bookinfo-demo
+        spec:
+          containers:
+            - env:
+              - name: OPENTRACING_ENABLED
+                value: "true"
+              - name: JAEGER_SAMPLER_TYPE
+                value: "probabilistic"
+              - name: JAEGER_SAMPLER_PARAM
+                value: "1"
+              - name: LATENCY_SAMPLER_PARAM
+                value: "1"
+              name: productpage
+              image: "docker.io/dymaczew/examples-bookinfo-productpage-v1:2020.2.1"
+              imagePullPolicy: IfNotPresent
+              ports:
+                - name: http
+                  containerPort: 9080
+                  protocol: TCP
+              livenessProbe:
+                tcpSocket:
+                  port: 9080
+              readinessProbe:
+                tcpSocket:
+                  port: 9080
+              resources:
+                {}
+---
+# Source: bookinfo/templates/ingress.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-ingress-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: productpage
+    prereq: "no"
+spec:
+  template:
+    apiVersion: networking.k8s.io/v1beta1
+    kind: Ingress
+    metadata:
+      name: bookinfo-ingress
+      labels:
+        app.kubernetes.io/name: bookinfo
+        app.kubernetes.io/instance: bookinfo-demo
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    spec:
+      rules:
+      - http:
+          paths:
+          - path: /bookinfo
+            backend:
+              serviceName: productpage
+              servicePort: 9080
