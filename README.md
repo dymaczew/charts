@@ -22,7 +22,7 @@ Bookinfo app is based on sample app from [Istio samples](https://github.com/isti
 
 To install bookinfo as MCM native app you need a cluster with IBM CloudPak for Multicloud Management 1.2 or newer.
 
-For IBM Cloud Pak for Multicloud Management 2.0 you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
+For IBM Cloud Pak for Multicloud Management 2.x you want to first deploy cloud native monitoring on a managed cluster. Some hints how to do this you can find [here](How%20to%20install%20cloud%20native%20monitoring%20on%20managed%20clusters.md)
 
 1. Clone this repo to your local workstation
 
@@ -31,10 +31,10 @@ For IBM Cloud Pak for Multicloud Management 2.0 you want to first deploy cloud n
    cd charts
    ```
 
-   If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.0
+   If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.1
 
    ```sh
-   oc apply -f bookinfo-multicluster-2020.2.0
+   oc apply -f bookinfo-multicluster-2020.2.1
    ```
 
 1. Below you can find the explanantion of the content of the files in this directory:
@@ -53,6 +53,9 @@ For IBM Cloud Pak for Multicloud Management 2.0 you want to first deploy cloud n
 
    - **08-bookinfo-multicluster.yaml**
    contains the definiton of application and subscription
+
+   - **10-load-generator.yaml**
+   contains the definiton of simple load generator that generates traffic against bookinfo app
 
 2. By default the `01-productpage-deployable.yaml` includes the deployable for ingress  with "/bookinfo" path. You may wish to customize or add the route deployable for deployments on OpenShift clusters
    
