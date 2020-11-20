@@ -10,6 +10,7 @@ metadata:
   name: carts-db
   labels:
     name: carts-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -20,6 +21,7 @@ spec:
     metadata:
       labels:
         name: carts-db
+        app: sock-shop
     spec:
       containers:
       - name: carts-db
@@ -51,6 +53,7 @@ metadata:
   name: carts-db
   labels:
     name: carts-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -66,6 +69,7 @@ metadata:
   name: carts
   labels:
     name: carts
+    app: sock-shop
     runtime: j2se
   namespace: sock-shop
 spec:
@@ -77,6 +81,7 @@ spec:
     metadata:
       labels:
         name: carts
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -115,6 +120,7 @@ metadata:
   name: carts
   labels:
     name: carts
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -130,6 +136,7 @@ metadata:
   name: catalogue-db
   labels:
     name: catalogue-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -140,6 +147,7 @@ spec:
     metadata:
       labels:
         name: catalogue-db
+        app: sock-shop
     spec:
       containers:
       - name: catalogue-db
@@ -168,6 +176,7 @@ metadata:
   name: catalogue-db
   labels:
     name: catalogue-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -184,6 +193,7 @@ metadata:
   labels:
     name: catalogue
     runtime: go
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -195,6 +205,7 @@ spec:
       labels:
         name: catalogue
         runtime: go
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -226,6 +237,7 @@ metadata:
   name: catalogue
   labels:
     name: catalogue
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -241,6 +253,7 @@ metadata:
   name: front-end
   namespace: sock-shop
   labels:
+    app: sock-shop
     runtime: node
 spec:
   replicas: 1
@@ -252,6 +265,7 @@ spec:
       labels:
         name: front-end
         runtime: node
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -283,6 +297,7 @@ metadata:
   name: front-end
   labels:
     name: front-end
+    app: sock-shop
   namespace: sock-shop
 spec:
   type: NodePort
@@ -298,6 +313,7 @@ metadata:
   name: orders-db
   labels:
     name: orders-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -308,6 +324,7 @@ spec:
     metadata:
       labels:
         name: orders-db
+        app: sock-shop
     spec:
       containers:
       - name: orders-db
@@ -338,6 +355,7 @@ metadata:
   name: orders-db
   labels:
     name: orders-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -354,6 +372,7 @@ metadata:
   labels:
     name: orders
     runtime: j2se
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -364,6 +383,7 @@ spec:
     metadata:
       labels:
         name: orders
+        app: sock-shop
         runtime: j2se
     spec:
       containers:
@@ -403,6 +423,7 @@ metadata:
   name: orders
   labels:
     name: orders
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -419,6 +440,7 @@ metadata:
   labels:
     name: payment
     runtime: go
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -430,6 +452,7 @@ spec:
       labels:
         name: payment
         runtime: go
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -461,6 +484,7 @@ metadata:
   name: payment
   labels:
     name: payment
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -477,6 +501,7 @@ metadata:
   labels:
     name: queue-master
     runtime: j2se
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -488,6 +513,7 @@ spec:
       labels:
         name: queue-master
         runtime: j2se
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -513,6 +539,7 @@ metadata:
   name: queue-master
   labels:
     name: queue-master
+    app: sock-shop
   annotations:
     prometheus.io/path: "/prometheus"
   namespace: sock-shop
@@ -530,6 +557,7 @@ metadata:
   name: rabbitmq
   labels:
     name: rabbitmq
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -540,6 +568,7 @@ spec:
     metadata:
       labels:
         name: rabbitmq
+        app: sock-shop
     spec:
       containers:
       - name: rabbitmq
@@ -565,6 +594,7 @@ metadata:
   name: rabbitmq
   labels:
     name: rabbitmq
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -581,6 +611,7 @@ metadata:
   labels:
     name: shipping
     runtime: j2se
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -592,6 +623,7 @@ spec:
       labels:
         name: shipping
         runtime: j2se
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -630,6 +662,7 @@ metadata:
   name: shipping
   labels:
     name: shipping
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -645,6 +678,7 @@ metadata:
   name: user-db
   labels:
     name: user-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -655,6 +689,7 @@ spec:
     metadata:
       labels:
         name: user-db
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -688,6 +723,7 @@ metadata:
   name: user-db
   labels:
     name: user-db
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:
@@ -704,6 +740,7 @@ metadata:
   labels:
     name: user
     runtime: go
+    app: sock-shop
   namespace: sock-shop
 spec:
   replicas: 1
@@ -715,6 +752,7 @@ spec:
       labels:
         name: user
         runtime: go
+        app: sock-shop
     spec:
       containers:
       - env:
@@ -748,6 +786,7 @@ metadata:
   name: user
   labels:
     name: user
+    app: sock-shop
   namespace: sock-shop
 spec:
   ports:

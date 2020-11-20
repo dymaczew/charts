@@ -17,6 +17,8 @@ spec:
     kind: Service
     metadata:
       name: details
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       labels:
         app.kubernetes.io/name: details
         app.kubernetes.io/instance: bookinfo-demo
@@ -77,7 +79,7 @@ spec:
               - name: LATENCY_SAMPLER_PARAM
                 value: "1"
               name: details
-              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.2.0"
+              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.2.1"
               imagePullPolicy: Always
               ports:
                 - name: http

@@ -17,6 +17,8 @@ spec:
     kind: Service
     metadata:
       name: reviews
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       labels:
         app.kubernetes.io/name: reviews
         app.kubernetes.io/instance: bookinfo-demo
@@ -78,7 +80,7 @@ spec:
               - name: LATENCY_SAMPLER_PARAM
                 value: "1"
               name: reviews
-              image: "docker.io/dymaczew/examples-bookinfo-reviews-v3:2020.2.0"
+              image: "docker.io/dymaczew/examples-bookinfo-reviews-v3:2020.2.1"
               imagePullPolicy: Always
               ports:
                 - name: http

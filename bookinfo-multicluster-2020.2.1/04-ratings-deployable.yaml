@@ -16,6 +16,8 @@ spec:
     apiVersion: v1
     kind: Service
     metadata:
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       name: ratings
       labels:
         app.kubernetes.io/name: ratings
@@ -87,9 +89,11 @@ spec:
                 value: "1"
               - name: LATENCY_SAMPLER_PARAM
                 value: "1"
+              - name: SERVICE_VERSION
+                value: "v-delayed"
               name: ratings
-              image: "docker.io/dymaczew/examples-bookinfo-ratings-v2:2020.2.0"
-              imagePullPolicy: Always
+              image: "docker.io/dymaczew/examples-bookinfo-ratings-v2:2020.2.1"
+              imagePullPolicy: IfNotPresent
               ports:
                 - name: http
                   containerPort: 9080

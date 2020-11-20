@@ -17,6 +17,8 @@ spec:
     kind: Service
     metadata:
       name: productpage
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       labels:
         app.kubernetes.io/name: productpage
         app.kubernetes.io/instance: bookinfo-demo
@@ -26,6 +28,7 @@ spec:
           targetPort: http
           protocol: TCP
           name: http
+      type: NodePort
       selector:
         app.kubernetes.io/name: productpage
         app.kubernetes.io/instance: bookinfo-demo
@@ -112,16 +115,14 @@ spec:
     kind: Ingress
     metadata:
       name: bookinfo-ingress
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       labels:
         app.kubernetes.io/name: bookinfo
         app.kubernetes.io/instance: bookinfo-demo
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
     spec:
-      rules:
-      - http:
-          paths:
-          - path: /bookinfo
-            backend:
-              serviceName: productpage
-              servicePort: 9080
+      backend:
+        serviceName: productpage
+        servicePort: 9080

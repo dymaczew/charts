@@ -41,6 +41,8 @@ spec:
     kind: Service
     metadata:
       name: mysqldb
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
       labels:
         app.kubernetes.io/name: mysqldb
         app.kubernetes.io/instance: bookinfo-demo
