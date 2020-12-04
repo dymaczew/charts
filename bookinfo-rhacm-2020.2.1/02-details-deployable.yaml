@@ -1,0 +1,101 @@
+# Source: bookinfo/charts/details/templates/service.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-svc-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "no"
+    apps.open-cluster-management.io/channel: bookinfo-ns-channel
+    apps.open-cluster-management.io/channel-type: Namespace
+spec:
+  template:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: details
+      annotations:
+        mcm.ibm.com/service-discovery: "{}"
+      labels:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      ports:
+        - port: 9080
+          targetPort: http
+          protocol: TCP
+          name: http
+      selector:
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+---
+# Source: bookinfo/charts/details/templates/deployment.yaml
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  name: bookinfo-details-deploy-deployable
+  namespace: bookinfo-source
+  labels:
+    appname: bookinfo-demo
+    release: bookinfo-demo
+    component: details
+    prereq: "no"
+    apps.open-cluster-management.io/channel: bookinfo-ns-channel
+    apps.open-cluster-management.io/channel-type: Namespace
+spec:
+  template:
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: bookinfo-demo-details
+      labels:
+        runtime: go
+        app.kubernetes.io/name: details
+        app.kubernetes.io/instance: bookinfo-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: details
+          app.kubernetes.io/instance: bookinfo-demo
+      template:
+        metadata:
+          labels:
+            runtime: go
+            app.kubernetes.io/name: details
+            app.kubernetes.io/instance: bookinfo-demo
+        spec:
+          containers:
+            - env:
+              - name: OPENTRACING_ENABLED
+                value: "true"
+              - name: JAEGER_SAMPLER_TYPE
+                value: "probabilistic"
+              - name: JAEGER_SAMPLER_PARAM
+                value: "1"
+              - name: LATENCY_SAMPLER_PARAM
+                value: "1"
+              name: details
+              image: "docker.io/dymaczew/examples-bookinfo-details-v1:2020.2.1"
+              imagePullPolicy: Always
+              ports:
+                - name: http
+                  containerPort: 9080
+                  protocol: TCP
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+              resources:
+                {}

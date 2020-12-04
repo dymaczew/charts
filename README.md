@@ -31,6 +31,12 @@ For IBM Cloud Pak for Multicloud Management 2.x you want to first deploy cloud n
    cd charts
    ```
 
+   If you are installing on CP4MCM 2.x with RHACM use bookinfo-rhacm-2020.2.1
+
+   ```sh
+   oc apply -f bookinfo-rhacm-2020.2.1
+   ```
+
    If you are installing on CP4MCM 2.x use bookinfo-multicluster-2020.2.1
 
    ```sh
