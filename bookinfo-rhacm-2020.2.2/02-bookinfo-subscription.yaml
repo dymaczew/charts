@@ -12,6 +12,6 @@ spec:
   channel: bookinfo-hub/bookinfo-channel
   placement:
     placementRef:
-      name: bookinfo-placementrule
+      name: bookinfo-rule
       kind: PlacementRule
       group: apps.open-cluster-management.io
