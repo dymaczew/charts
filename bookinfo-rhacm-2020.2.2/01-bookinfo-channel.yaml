@@ -1,0 +1,13 @@
+# Create a Channel that declares resources that can be deployed
+# Channel can be a Namespace, Object Store Bucket, or Helm Repo
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: bookinfo-channel
+  namespace: bookinfo-hub
+  labels:
+    purpose: icam-demo
+    appname: bookinfo-demo
+spec:
+  type: GitHub
+  pathname: https://github.com/dymaczew/bookinfo.git
