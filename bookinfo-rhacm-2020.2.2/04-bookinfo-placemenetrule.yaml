@@ -1,0 +1,12 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: bookinfo-rule
+  namespace: bookinfo-hub
+  labels:
+    app: bookinfo-demo
+spec:
+  clusterReplicas: 1
+  clusterSelector:
+    matchLabels:
+      environment: dev
