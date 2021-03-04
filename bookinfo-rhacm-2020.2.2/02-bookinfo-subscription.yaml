@@ -1,0 +1,17 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: bookinfo-subscription
+  namespace: bookinfo-hub
+  labels:
+    app: bookinfo-demo
+  annotations:
+    apps.open-cluster-management.io/github-path: bookinfo
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  channel: bookinfo-hub/bookinfo-channel
+  placement:
+    placementRef:
+      name: bookinfo-placementrule
+      kind: PlacementRule
+      group: apps.open-cluster-management.io
